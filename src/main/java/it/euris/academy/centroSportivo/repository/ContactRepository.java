@@ -15,11 +15,13 @@ public interface ContactRepository extends JpaRepository<Contact, Long> {
     @Modifying
     @Transactional
     @Query(value=   "UPDATE contact c " +
-            "  SET c.contact=true " +
+            "  SET c.contact=1 " +
             "  WHERE c.id = :id", nativeQuery = true)
     void logicalDelete(@Param("id") Long id);
 
-    @Query(value=   "SELECT COUNT(c.id) as countAll, COUNT(c.deleted) as countDeleted " +
+    @Query(value=   "SELECT COUNT(c.id) as countAll, " +
+        " SUM(CASE WHEN c.deleted=0 THEN 1 ELSE 0 END) as countOk " +
+        ", SUM(CASE WHEN c.deleted=1 THEN 1 ELSE 0 END) as countDeleted " +
             "  FROM contact c " +
             "  WHERE c.deleted=0 or c.deleted=1", nativeQuery = true)
     ContactCountProjection getCount();
@@ -30,6 +32,6 @@ public interface ContactRepository extends JpaRepository<Contact, Long> {
 
     @Query(value =  "SELECT * " +
             "FROM contact c " +
-            "WHERE c.deleted=true", nativeQuery = true)
+            "WHERE c.deleted=1", nativeQuery = true)
     Set<Contact> getAllDeleted();
 }

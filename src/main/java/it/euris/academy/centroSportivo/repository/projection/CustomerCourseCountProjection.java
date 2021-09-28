@@ -4,5 +4,7 @@ public interface CustomerCourseCountProjection {
 
     Integer getCountAll();
 
+    Integer getCountOk();
+
     Integer getCountDeleted();
 }

@@ -1,0 +1,19 @@
+.aca-center {
+  width: min-content;
+  margin: 0 auto;
+}
+
+.aca-card {
+  min-width: 40rem;
+  box-shadow: 0px 2px 5px 3px #098408;
+  margin-top: 35px;
+}
+
+.aca-fill {
+  width: 100%;
+}
+
+.saveForm {
+  margin-top: 25px;
+  display: none;
+}

@@ -25,6 +25,7 @@ public class CustomerController {
         return customerService.getAllDeleted();
     }
 
+    //TODO buggata per lazy execution e se metto fetchType.Eager va in overflow
     @GetMapping("/v1/all")
     public Set<CustomerDto> getReallyAll() {
         return customerService.getReallyAll();

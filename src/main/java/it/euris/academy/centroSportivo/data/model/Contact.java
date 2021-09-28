@@ -7,6 +7,7 @@ package it.euris.academy.centroSportivo.data.model;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.euris.academy.centroSportivo.data.archetype.Model;
 import it.euris.academy.centroSportivo.data.dto.ContactDto;
 import it.euris.academy.centroSportivo.data.enums.ContactType;
@@ -15,6 +16,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.Where;
 
 @NoArgsConstructor
@@ -32,6 +35,7 @@ public class Contact implements Model{
   private Long id;
   
   @Column(name="contact_type")
+  @Enumerated(EnumType.STRING)
   private ContactType contactType;
   
   @Column(name="value")
@@ -51,6 +55,7 @@ public class Contact implements Model{
         .id(UT.numberToString(id))
         .contactType(UT.contactTypeToString(contactType))
         .value(value)
+        .customerId(customerId.getId().toString())
         .build();
   }
 

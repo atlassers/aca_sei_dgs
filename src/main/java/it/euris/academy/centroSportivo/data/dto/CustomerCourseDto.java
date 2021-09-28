@@ -5,6 +5,7 @@ import it.euris.academy.centroSportivo.data.archetype.Dto;
 import it.euris.academy.centroSportivo.data.model.Course;
 import it.euris.academy.centroSportivo.data.model.Customer;
 import it.euris.academy.centroSportivo.data.model.CustomerCourse;
+import it.euris.academy.centroSportivo.data.model.key.CustomerCourseKey;
 import it.euris.academy.centroSportivo.utils.UT;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,6 +27,7 @@ public class CustomerCourseDto implements Dto {
     @Override
     public CustomerCourse toModel() {
     return CustomerCourse.builder()
+        .id(new CustomerCourseKey(UT.toLong(customerId), UT.toLong(courseId)))
         .customer(new Customer(UT.toLong(customerId)))
         .course(new Course(UT.toLong(courseId)))
         .deleted(deleted)

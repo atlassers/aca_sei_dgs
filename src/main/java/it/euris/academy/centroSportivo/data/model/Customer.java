@@ -58,10 +58,12 @@ public class Customer implements Model{
 
   @OneToMany(mappedBy = "customerId")
   @JsonIgnore
-  private List<Contact> contacts = new ArrayList<Contact>();
+  @Builder.Default
+  private Set<Contact> contacts = new HashSet<Contact>();
 
   @OneToMany(mappedBy = "customer")
   @JsonIgnore
+  @Builder.Default
   private Set<CustomerCourse> customerCourses = new HashSet<CustomerCourse>();
   //TODO valuto gli anni di iscrizione come conteggio dei corsi fatti
 

@@ -45,9 +45,11 @@ public class Course implements Model{
   private Double price;
   
   @Column(name="sport")
+  @Enumerated(EnumType.STRING)
   private Sport sport;
   
   @Column(name="difficulty")
+  @Enumerated(EnumType.STRING)
   private Difficulty difficulty;
 
   @Column(name="deleted")
@@ -56,6 +58,7 @@ public class Course implements Model{
 
   @OneToMany(mappedBy = "course")
   @JsonIgnore
+  @Builder.Default
   private Set<CustomerCourse> customerCourses = new HashSet<CustomerCourse>();
 
   public Course(Long id) {

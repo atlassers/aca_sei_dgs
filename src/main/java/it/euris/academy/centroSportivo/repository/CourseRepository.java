@@ -16,11 +16,13 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     @Modifying
     @Transactional
     @Query(value=   "UPDATE course c " +
-            "  SET c.deleted=true " +
+            "  SET c.deleted=1 " +
             "  WHERE c.id = :id", nativeQuery = true)
     void logicalDelete(@Param("id") Long id);
 
-    @Query(value=   "SELECT COUNT(c.id) as countAll, COUNT(c.deleted) as countDeleted " +
+    @Query(value=   "SELECT COUNT(c.id) as countAll, " +
+                    " SUM(CASE WHEN c.deleted=0 THEN 1 ELSE 0 END) as countOk " +
+                    ", SUM(CASE WHEN c.deleted=1 THEN 1 ELSE 0 END) as countDeleted " +
             "  FROM course c " +
             "  WHERE c.deleted=0 or c.deleted=1", nativeQuery = true)
     CourseCountProjection getCount();
@@ -31,6 +33,6 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 
     @Query(value =  "SELECT * " +
             "FROM course c " +
-            "WHERE c.deleted=true", nativeQuery = true)
+            "WHERE c.deleted=1", nativeQuery = true)
     Set<Course> getAllDeleted();
 }

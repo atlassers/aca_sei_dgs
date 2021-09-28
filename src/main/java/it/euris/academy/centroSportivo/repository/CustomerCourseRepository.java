@@ -18,21 +18,30 @@ public interface CustomerCourseRepository extends JpaRepository<CustomerCourse, 
     @Modifying
     @Transactional
     @Query(value=   "UPDATE customer_course c " +
-            "  SET c.deleted=true " +
+            "  SET c.deleted=1 " +
             "  WHERE c.id = :id", nativeQuery = true)
     void logicalDelete(@Param("id") CustomerCourseKey id);
 
-    @Query(value=   "SELECT COUNT(c.id) as countAll, COUNT(c.deleted) as countDeleted " +
+    @Query(value=   "SELECT COUNT(c.course_id) as countAll, " +
+        " SUM(CASE WHEN c.deleted=0 THEN 1 ELSE 0 END) as countOk, " +
+        " SUM(CASE WHEN c.deleted=1 THEN 1 ELSE 0 END) as countDeleted " +
         "  FROM customer_course c " +
+        "  JOIN customer cu ON cu.id=c.customer_id " +
+        "  JOIN course co ON co.id=c.course_id" +
         "  WHERE c.deleted=0 or c.deleted=1", nativeQuery = true)
     CustomerCourseCountProjection getCount();
 
     @Query(value =  "SELECT * " +
-        "FROM customer_course c", nativeQuery = true)
+        "FROM customer_course c " +
+        "  JOIN customer cu ON cu.id=c.customer_id " +
+        "  JOIN course co ON co.id=c.course_id" +
+        "  JOIN contact con ON con.customer_id=cu.id", nativeQuery = true)
     Set<CustomerCourse> getReallyAll();
 
     @Query(value =  "SELECT * " +
         "FROM customer_course c " +
-        "WHERE c.deleted=true", nativeQuery = true)
+        "  JOIN customer cu ON cu.id=c.customer_id " +
+        "  JOIN course co ON co.id=c.course_id" +
+        " WHERE c.deleted=1", nativeQuery = true)
     Set<CustomerCourse> getAllDeleted();
 }

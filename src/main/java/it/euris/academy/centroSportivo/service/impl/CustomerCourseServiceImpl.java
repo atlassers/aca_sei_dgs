@@ -36,14 +36,18 @@ public class CustomerCourseServiceImpl implements CustomerCourseService {
 
     @Override
     public CustomerCourseDto add(CustomerCourseDto dataToInsert) {
-        if(dataToInsert.getId() != null)
+        if(dataToInsert.getCourseId() != null)
+            throw new IdMustBeNullException();
+        if(dataToInsert.getCustomerId() != null)
             throw new IdMustBeNullException();
         return customerCourseRepository.save(dataToInsert.toModel()).toDto();
     }
 
     @Override
     public CustomerCourseDto update(CustomerCourseDto dataToInsert) {
-        if(dataToInsert.getId() == null)
+        if(dataToInsert.getCourseId() == null)
+            throw new IdMustNotBeNullException();
+        if(dataToInsert.getCustomerId() == null)
             throw new IdMustNotBeNullException();
         return customerCourseRepository.save(dataToInsert.toModel()).toDto();
     }
@@ -59,10 +63,12 @@ public class CustomerCourseServiceImpl implements CustomerCourseService {
         return customerCourseRepository.getCount();
     }
 
+    //TODO risolvere errore di lazy execution
     @Override public Set<CustomerCourseDto> getReallyAll() {
         return customerCourseRepository.getReallyAll().stream().map(CustomerCourse::toDto).collect(Collectors.toSet());
     }
 
+    //TODO risolvere errore di lazy execution
     @Override public Set<CustomerCourseDto> getAllDeleted() {
         return customerCourseRepository.getAllDeleted().stream().map(CustomerCourse::toDto).collect(Collectors.toSet());
     }

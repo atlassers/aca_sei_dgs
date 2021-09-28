@@ -4,5 +4,7 @@ public interface AddressCountProjection {
 
     Integer getCountAll();
 
+    Integer getCountOk();
+
     Integer getCountDeleted();
 }
