@@ -26,11 +26,11 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     CourseCountProjection getCount();
 
     @Query(value =  "SELECT * " +
-            "FROM address c", nativeQuery = true)
+            "FROM course c", nativeQuery = true)
     Set<Course> getReallyAll();
 
     @Query(value =  "SELECT * " +
-            "FROM address c " +
+            "FROM course c " +
             "WHERE c.deleted=true", nativeQuery = true)
     Set<Course> getAllDeleted();
 }

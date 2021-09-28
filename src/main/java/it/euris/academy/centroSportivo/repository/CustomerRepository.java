@@ -30,11 +30,11 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     CustomerCountProjection getCount();
 
     @Query(value =  "SELECT * " +
-            "FROM address c", nativeQuery = true)
+            "FROM customer c", nativeQuery = true)
     Set<Customer> getReallyAll();
 
     @Query(value =  "SELECT * " +
-            "FROM address c " +
+            "FROM customer c " +
             "WHERE c.deleted=true", nativeQuery = true)
     Set<Customer> getAllDeleted();
 }

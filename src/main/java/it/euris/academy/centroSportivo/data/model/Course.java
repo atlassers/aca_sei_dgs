@@ -5,7 +5,10 @@
 
 package it.euris.academy.centroSportivo.data.model;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -53,7 +56,7 @@ public class Course implements Model{
 
   @OneToMany(mappedBy = "course")
   @JsonIgnore
-  private List<CustomerCourse> customerCourses;
+  private Set<CustomerCourse> customerCourses = new HashSet<CustomerCourse>();
 
   public Course(Long id) {
     this.id= id;

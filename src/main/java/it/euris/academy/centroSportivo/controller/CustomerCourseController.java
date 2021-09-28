@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 //TODO da testare se metodi funzionano
-//TODO da decidere come gestire l'ID su Dto
+@RestController
+@RequestMapping("/customer-courses")
 public class CustomerCourseController {
 
     @Autowired CustomerCourseService customerCourseService;

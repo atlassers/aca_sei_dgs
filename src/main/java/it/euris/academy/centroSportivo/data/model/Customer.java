@@ -6,6 +6,8 @@
 package it.euris.academy.centroSportivo.data.model;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.*;
@@ -56,11 +58,11 @@ public class Customer implements Model{
 
   @OneToMany(mappedBy = "customerId")
   @JsonIgnore
-  private List<Contact> contacts;
+  private List<Contact> contacts = new ArrayList<Contact>();
 
   @OneToMany(mappedBy = "customer")
   @JsonIgnore
-  private Set<CustomerCourse> customerCourses;
+  private Set<CustomerCourse> customerCourses = new HashSet<CustomerCourse>();
   //TODO valuto gli anni di iscrizione come conteggio dei corsi fatti
 
   public Customer(Long id) {
