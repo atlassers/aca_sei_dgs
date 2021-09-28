@@ -1,0 +1,49 @@
+# Parametri generali di settaggio del server
+# http://localhost:8100/centro-sportivo
+server:
+  port: 8100
+  servlet:
+    context-path: /centro-sportivo
+
+## Application
+spring:                                                                                                   
+  # Nome del microservizio all'interno del server (utile per identificarlo in caso di più microservizi)
+  application:
+    name: centro-sportivo-microservice
+  mvc:
+    throw-exception-if-no-handler-found: true    
+  # Settaggi del database
+  jpa:
+    hibernate:
+      # Imponi ad hibernate di creare le statement SQL in update, quindi crea se non esiste e aggiorna se esiste
+      ddl-auto: update
+    properties: 
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+  datasource:
+    url: jdbc:mysql://localhost:3306/centro_sportivo?useLegacyDatetimeCode=false
+    username: academy
+    password: academy
+### SECURITY ###
+  security:
+    user:
+      name: academy
+      password: academy
+      roles: manager
+### SECURITY ###
+
+## Actuator api exposed
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info,health,metrics,prometheus
+  endpoint:
+    health:
+      show-details: when-authorized
+  server:
+    port: 9101
+    base-path: /health
