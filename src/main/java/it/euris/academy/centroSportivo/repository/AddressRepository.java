@@ -37,4 +37,7 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
                     "FROM address a " +
                     "WHERE a.deleted=1", nativeQuery = true)
     Set<Address> getAllDeleted();
+
+    @Query("select a from Address a where a.deleted=1")
+    Set<Address> getAllDeletedJPQL();
 }
